@@ -1,0 +1,19 @@
+version: '3'
+services:
+  redis-server:
+    image: redis
+  web:
+    image: node-redis-image
+    build: .
+    ports:
+      - 3000
+  lb:
+    image: nginx
+    ports:
+      - 80:80
+    links:
+      - web
+      - redis-server
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
